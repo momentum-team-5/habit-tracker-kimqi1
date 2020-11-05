@@ -19,7 +19,19 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("habits/ ,"", habits_views.habits_list, name='habits_list'),
+    path("habits/<int:pk>/", habits_views.habits_detail, name='habits_detail'),
+    path("habits/create/", habits_views.add_habit, name='add_habit'),
+    path("habits/<int:pk>/delete/", habits_views.delete_habit, name='delete_habit'),
+    path("habits/<int:pk>/update/", habits_views.update_record, name='update_habit'),)
+    path("habits/<int:habit_pk>/records/", records_views.records_list, name='records_list'),
+    path("habits/<int:habit-pk>/add-record", records_views.add_record, name='add_record'),)
+    path("records/<int:pk>/update", records_views.update_record, name='update_record'),
+    path("records/<int:pk>/delete/", records_views.delete_record, name='delete_record'),
+    
 ]
+
+
 
 if settings.DEBUG:
     import debug_toolbar

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from datetime import date
 from core.models import Habit
+from core.models import record
 
 # Create your views here.
 
@@ -61,8 +62,16 @@ def delete_habit(request, pk):
         return redirect("habit-list")
 
     return render(request, "core/habit_delete.html", {"habit": habit})
-        
+
     
+
+# create a record
+
+
+# update a record
+
+
+# delete a record
 
 
 
