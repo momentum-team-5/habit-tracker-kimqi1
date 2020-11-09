@@ -1,11 +1,27 @@
-from django.shortcuts import render
-from datetime import date
-from core.models import Habit
-from core.models import record
+
+from core.models import Habit, Record
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect, render
+from core.forms import HabitForm
+
 
 # Create your views here.
 
-# Create one habit
+# list all habits
+@login_required(login_url='/accounts/login')
+def habit_list(request):
+    habits = Habit.objects.all()
+
+    return render(request, "core/habit_list.html", {"habits": habits})
+
+# Show deatails of one habit
+@login_required(login_url='/accounts/login')
+def habit_detail(request, pk):
+    habit = get_object_or_404(Habit, pk=pk)
+    return render(request, "core/habit_list.html", {"habit": habit})
+
+# Create habit
+@login_required(login_url='/accounts/login')
 def add_habit(request):
     if request.method == "GET":
         form = HabitForm()
@@ -14,65 +30,56 @@ def add_habit(request):
         form = HabitForm(data=request.POST)
 
         if form.is_valid():
-            habit = form.save()
-            return redirect("habit-detail" , pk=habit.pk)
+            habit = form.save(commit=False)
+            habit.user = request.user
+            habit.save()
+            return redirect("habit_detail", pk=habit.pk)
     return render(request, "core/habit_create.html", {"form": form})
 
 
-# Show one habit
-def habit_detail(request, pk):
-    habit = get_object_or_404(habit, pk=pk)
-    return render(request, "habit/habits_list.html", {"habits": habits})
-
-
-# Update one habit
-def edit_habit(request, pk):
+# update habit
+@login_required(login_url='/accounts/login')
+def update_habit(request, pk):
     habit = get_object_or_404(Habit, pk=pk)
 
     if request.method == "GET":
-        form = HabitForm(instance=form)
+        form = HabitForm(instance=habit)
 
     else:
-        form = HabitForm(data=request.POST)
+        form = HabitForm(instance=habit, data=request.POST)
 
         if form.is_valid():
-            habit = form.save()  
+            habit = form.save() 
 
-            return redirect("habit-detail", pk=habit.pk
+            return redirect("habit_detail", pk=habit.pk)
 
 
     return render(request, "habit/edit_habit.html", {"habit": habit, "form": form})
 
 
 
-# list all habits
-def habit_list(request):
-    habits = habit.objects.all()
-
-    return render(request, "habit/habits_list.html", {"habits": habits})
-
-
-
 # delete a habit
+@login_required(login_url='/accounts/login')
 def delete_habit(request, pk):
-    habit = get_object_or_404(Poem, pk=pk)
+    habit = get_object_or_404(Habit, pk=pk)
 
-    if request.method == "POST"
+    if request.method == "POST":
         habit.delete()
-        return redirect("habit-list")
+        return redirect("habit_list")
 
     return render(request, "core/habit_delete.html", {"habit": habit})
 
-    
 
 # create a record
+#@login_required(login_url='/accounts/login')
+
+#class Meta:
+#    unique_together = ["user", "date",]
 
 
 # update a record
+#@login_required(login_url='/accounts/login')
 
 
 # delete a record
-
-
-
-
+#@login_required(login_url='/accounts/login')

@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block meta %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% endblock meta %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style/style.css' %}">
+    {% block title %}
+    <title>Habit Tracker</title>
+    {% endblock title %}
+    
+
+</head>
+
+<body>
+
+    <header class='header'>
+        <h1>
+          <a href="{% url 'habit_list' %}">My Habit Tracker</a>
+        </h1>
+        <div class='buttondisp'>
+          {% if user.is_authenticated %}
+          <a class='header-button' href="{% url 'habit_list' %}">Habits</a>
+          <a class='header-button' href="/accounts/logout">Logout</a>
+          {% else %}
+          <a class='header-button' href="/accounts/login">Login</a>
+          <a class='header-button' href="/accounts/register">Register</a>
+          {% endif %}
+        </div>
+    
+        <div class="buttondisp">
+          <a class='header-button' href="{% url 'add_habit' %}">+ habit</a>
+            <p>Add Link to add record</p>
+        </div>
+      </header>
+    
+      {% block content %}
+      {% endblock content %}
+    
+</body>
+</html>

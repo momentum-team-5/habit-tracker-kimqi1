@@ -16,18 +16,19 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.urls import include, path
+from core import views 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("habits/ ,"", habits_views.habits_list, name='habits_list'),
-    path("habits/<int:pk>/", habits_views.habits_detail, name='habits_detail'),
-    path("habits/create/", habits_views.add_habit, name='add_habit'),
-    path("habits/<int:pk>/delete/", habits_views.delete_habit, name='delete_habit'),
-    path("habits/<int:pk>/update/", habits_views.update_record, name='update_habit'),)
-    path("habits/<int:habit_pk>/records/", records_views.records_list, name='records_list'),
-    path("habits/<int:habit-pk>/add-record", records_views.add_record, name='add_record'),)
-    path("records/<int:pk>/update", records_views.update_record, name='update_record'),
-    path("records/<int:pk>/delete/", records_views.delete_record, name='delete_record'),
+    path("" ,views.habit_list, name='habit_list'),
+    path("habits/<int:pk>/", views.habit_detail, name='habit_detail'),
+    path("habits/create/", views.add_habit, name='add_habit'),
+    path("habits/<int:pk>/delete/", views.delete_habit, name='delete_habit'),
+    path("habits/<int:pk>/update/", views.update_habit, name='update_habit'),
+   # path("habits/<int:habit_pk>/records/", views.records_list, name='records_list'),
+   # path("habits/<int:habit-pk>/add-record", views.add_record, name='add_record'),
+#    path("records/<int:pk>/update", views.update_record, name='update_record'),
+#   path("records/<int:pk>/delete/", views.delete_record, name='delete_record'),
     
 ]
 

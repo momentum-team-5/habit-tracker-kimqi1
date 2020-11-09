@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Habit List</h1>
+<ul class="list pl0 flex flex-wrap" id="habit-list">
+    {% for habit in habits %}
+      <li class="ba bw1 pa2 mr2 mb2">
+        <div>
+          <a href="{% url 'habit_detail' pk=habit.pk %}">{{ habit.title }}</a> (by {{ habit.user }})
+        </div>
+ 
+    {% endfor %}
+  </ul>
+  {% endblock %}
